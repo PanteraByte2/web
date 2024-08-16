@@ -1,0 +1,263 @@
+@import '../JS/node_modules/swiper/swiper-bundle.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: rgb(203, 66, 66);
+}
+
+a{
+    text-decoration: none;
+    color: aquamarine;
+}
+
+p, a, h1{
+    font-family: "Montserrat", sans-serif;
+}
+
+h1{
+    font-weight: 400;
+    font-size: 50px;
+}
+
+/* Menu */
+
+header{
+    height: 75px;
+    width: 100%;    
+}
+
+nav{
+    max-height: 100px;
+    width: 100%;
+
+    z-index: 1000;
+    position: fixed;
+
+    background: rgb(68, 51, 51);
+}
+
+.enlace{
+    position: absolute;
+    padding: 20px 50px;
+}
+
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+}
+
+nav ul li a{
+    font-size: 18px;
+    padding: 20px;
+
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+li a:hover{
+    background-color: rgb(220, 154, 55);
+    transition: .5s;
+}
+
+.lista-productos{
+    max-width: 150px;
+
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+}
+
+.productos-lista:hover > .lista-productos{
+    display: block;
+    flex-direction: column;
+    background: rgb(68, 51, 51);
+}
+
+.checkbtn{
+    font-size: 30px;
+    color: #fff;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+
+#check{
+    display: none;
+}
+
+/* Contenido */
+
+main{
+    width: 100%;
+    max-height: 3000px;
+}
+
+.Novedades{
+    width: 100%;
+    max-height: 1000px;
+}
+
+.Contenedor{
+    width: 100%;
+    height: 600px;
+}
+
+.swiper{
+    width: 100%;
+    height: 500px;
+}
+
+.slides-conteiner{
+    width: 100%;
+    height: 500px;
+}
+
+.swiper-slide{
+    width: 450px;
+    height: 450px;
+    visibility: visible;
+
+    padding: 25px;
+    border-radius: 100px;
+    overflow: hidden;
+    background-color: rgb(219, 202, 202);
+}
+
+
+/* Pie de PAgina */
+
+footer{
+    width: 100%;
+    max-height: 1000px;
+    display: flex;
+}
+
+.Datos{
+    width: 40%;
+    height: 100px;
+}
+
+.Derechos{
+    width: 60%;
+    height: 100px;
+}
+
+.secciones{
+    width: 100%;
+    height: 100px;
+}
+
+@media (max-width: 952px){
+    .enlace{
+        padding-left: 20px;
+    }
+    nav ul li a{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .Contenedor{
+        width: 100%;
+        height: 750px;
+    }
+
+    .swiper{
+        width: 100%;
+        height: 700px;
+    }
+
+    .slides-conteiner{
+        width: 100%;
+        height: 650px;
+    }
+
+    .swiper-slide{
+        width: 500px;
+        height: 550px;
+    }   
+}
+
+@media screen and (max-width: 700px) {
+    h1{
+        font-size: 25px;
+    }
+
+    /*Contenidos*/
+
+    .Novedades{
+        max-height: 600px;
+    }
+
+    .Contenedor{
+        max-height: 550px;
+    }
+
+    .swiper{
+        height: 400px;
+    }
+
+    .swiper-slide{
+        width: 250px;
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    /*Menu*/
+    
+    .checkbtn{
+        display: block;
+    }
+
+    ul{
+        width: 100%;
+        height: 100%;
+
+        bottom: 100%;
+        position: fixed;
+        background: #2c3e50;
+
+        text-align: center;
+        transition: all .5s;
+    }
+
+    .lista-productos{
+        display: block;
+        text-align: left;
+    }
+
+    nav ul li{
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+
+    nav ul li a{
+        font-size: 20px;
+    }
+
+    li a:hover{
+        background: none;
+        color: red;
+    }
+
+    #check:checked ~ ul{
+        bottom: -95px;
+    }
+
+    .Productos:hover ~ .lista-productos{
+        bottom: -95px;
+    }
+}

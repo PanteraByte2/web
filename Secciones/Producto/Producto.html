@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eCommerce - Productos</title>
+    <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: space-around;
+        }
+    
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            background-color: #f9f9f9;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    
+        .name {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+    
+        .price {
+            font-size: 1em;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+    
+        #checkout-btn, .add-to-cart-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: center;
+        }
+    
+        #checkout-btn:hover, .add-to-cart-btn:hover {
+            background-color: #45a049;
+        }
+
+        #carrito {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        #carrito ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="menu">
+        <!-- Tu código del menú aquí -->
+    </header>
+    
+    <main>
+        <section class="Productos">
+            <h1>Nuestros Productos</h1>
+            <div id="lista-productos" class="card-container"></div>
+        </section>
+
+        <aside id="carrito">
+            <h2>Carrito de Compras</h2>
+            <ul id="carrito-items"></ul>
+            <button id="checkout-btn">Finalizar Compra</button>
+            <div id="wallet_container"></div>
+        </aside>
+    </main>
+
+    <footer>
+        <!-- Tu código del footer aquí -->
+    </footer>
+
+    <!-- Incluir el SDK de Mercado Pago -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <!-- Archivo JavaScript que contiene la lógica -->
+    <script src="../../JS/checkout.js" defer></script>
+    
+    <script>
+        let carrito = [];
+        let id_cliente = 1; // Cambia esto según el cliente actual (esto debería ser dinámico en una aplicación real)
+        
+        function cargarProductos() {
+            fetch('/productos')
+                .then(response => response.json())
+                .then(productos => {
+                    const listaProductos = document.getElementById('lista-productos');
+                    productos.forEach(producto => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+    
+                        const name = document.createElement('h3');
+                        name.className = 'name';
+                        name.textContent = producto.nombre;
+                        card.appendChild(name);
+    
+                        const descripcion = document.createElement('p');
+                        descripcion.textContent = producto.descripcion;
+                        card.appendChild(descripcion);
+    
+                        const price = document.createElement('div');
+                        price.className = 'price';
+                        price.textContent = `Precio: $${producto.precio_unitario}`;
+                        card.appendChild(price);
+    
+                        const button = document.createElement('button');
+                        button.className = 'add-to-cart-btn';
+                        button.textContent = 'Agregar al Carrito';
+                        button.onclick = () => agregarAlCarrito(producto);
+                        card.appendChild(button);
+    
+                        listaProductos.appendChild(card);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function agregarAlCarrito(producto) {
+            fetch('/iniciar-pedido', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id_cliente })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const id_pedido = data.id_pedido;
+                
+                fetch('/agregar-al-carrito', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id_producto: producto.id_producto,
+                        cantidad: 1, // Puedes ajustar la cantidad según sea necesario
+                        id_pedido
+                    })
+                })
+                .then(response => response.json())
+                .then(() => {
+                    carrito.push(producto);
+                    actualizarCarrito();
+                })
+                .catch(error => console.error('Error:', error));
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const carritoItems = document.getElementById('carrito-items');
+            carritoItems.innerHTML = '';
+            carrito.forEach((producto, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${producto.nombre} - $${producto.precio_unitario}`;
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Eliminar';
+                removeBtn.onclick = () => eliminarDelCarrito(index);
+                li.appendChild(removeBtn);
+                carritoItems.appendChild(li);
+            });
+        }
+
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            // Función para manejar el proceso de pago
+            handleCheckout();
+        });
+
+        function handleCheckout() {
+            // Aquí se inicializa el SDK de Mercado Pago
+            const mp = new MercadoPago('APP_USR-405752fa-83cd-43b1-bd30-352314bc1954', {
+                locale: "es-AR",
+            });
+
+            // Crear una preferencia de pago
+            fetch('/create_preference', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: 'Pedido en Carrito', // Puedes personalizar el título
+                    quantity: carrito.length,
+                    price: carrito.reduce((total, item) => total + item.precio_unitario, 0)
+                })
+            })
+            .then(response => response.json())
+            .then(preference => {
+                // Renderizar el botón de pago de Mercado Pago
+                const bricksBuilder = mp.bricks();
+                bricksBuilder.create("wallet", "wallet_container", {
+                    initialization: {
+                        preferenceId: preference.id,
+                    },
+                    customization: {
+                        texts: {
+                            valueProp: 'smart_option',
+                        },
+                    },
+                }).then((button) => {
+                    // Aquí puedes manejar el botón de pago si es necesario
+                }).catch(error => console.error('Error al crear el botón:', error));
+            })
+            .catch(error => console.error('Error al crear la preferencia:', error));
+        }
+
+        // Llamar a la función cuando se carga la página
+        window.onload = cargarProductos;
+    </script>
+</body>
+</html>

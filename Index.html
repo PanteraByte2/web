@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eCommerce</title>
+    <link rel="stylesheet" href="CSS/style.css">    
+</head>
+
+<body>
+    <header>
+        <nav>
+            <input type="checkbox" name="" id="check">
+            <label for="check" class="checkbtn">
+                <img class="fas fa-bars" src="Imagenes/Iconos/menu.png" width="30">
+            </label>
+            <ul class="contenidos">
+                <li><a class="active" href="#">Inicio</a></li>
+                <li><a href="http://localhost:3000/login">Iniciar Sesion</a></li>
+                <li><a href="/Secciones/Usuario/Usuario.html">Tu Perfil</a></li>
+                <li class="productos-lista"><a href="http://localhost:3000/productos-pagina"  class="Productos">Productos</a>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="Novedades">
+            <article class="Contenedor">
+                <h1>Novedades del Dia</h1>
+
+                <!-- Slider main container -->
+                <div class=" swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="slides-container swiper-wrapper" id="slides-container">
+                        <!-- Slides -->
+                    </div>
+
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+
+            </article>
+        </section>
+
+        <script src="JS/node_modules/swiper/swiper-bundle.min.js"></script>
+        <script src="JS/perfil.js"></script>
+
+        <script src="JS/slides.js"></script>
+        <script src="JS/ajuste_menu.js"></script>
+    </main>
+
+    <footer>
+        <section class="Datos">
+            <div>
+
+            </div>
+        </section>
+        <section class="Derechos">
+            <div>
+                <p>&copy; 2024 Deportes Pirulo. Todos los derechos reservados.</p>
+            </div>            
+        </section>
+    </footer>
+</body>
+</html>

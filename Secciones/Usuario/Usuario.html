@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>eCommerce</title>
+        <link rel="stylesheet" href="CSS/style.css">
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('/usuario')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('email').textContent = data.email;
+                        document.getElementById('usuario').textContent = data.id_cliente;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <input type="checkbox" name="" id="check">
+                <label for="check" class="checkbtn">
+                    <img class="fas fa-bars" src="Imagenes/Iconos/menu.png" width="30">
+                </label>
+                <ul class="contenidos">
+                    <li><a class="active" href="/Index.html">Inicio</a></li>
+                    <li class="productos-lista"><a href="#"  class="Productos">Productos</a>
+                        <ul class="lista-productos">
+                            <li><a href="#">Futbol</a></li>
+                            <li><a href="#">Bascket</a></li>
+                            <li><a href="#">Tenis</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="informacion">
+                <h1>Bienvenido <span id="email"></span></h1>
+                <p>ID Usuario: <span id="usuario"></span></p>
+                <p>ID Cliente: <span id="cliente"></span></p>                
+                <p>Telefono: <span id="direccion"></span></p>                
+                <p>Direccion: <span id="telefono"></span></p>                
+            </section>
+            <br>
+            <a href="/Secciones/Usuario/Cliente.html">Accede como Cliente</a>
+        </main>
+        <script src="/JS/app.js"></script>
+        <script src="/JS/ajuste_menu.js"></script>
+    </body>
+</html>

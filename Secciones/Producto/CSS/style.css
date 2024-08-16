@@ -1,0 +1,173 @@
+@import '../JS/node_modules/swiper/swiper-bundle.css';
+
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/* Menu */
+
+a{
+    text-decoration: none;
+}
+
+.menu{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    max-height: 200px;
+
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.icono{
+    display: none;
+}
+
+.menu-contenedor{
+    width: 100%;
+    max-height: 100px;
+
+    padding: 2px;
+}
+
+.contenidos{
+    width: 100%;
+    max-height: 100px;
+
+    list-style: none;
+    display: flex;
+}
+
+.item{
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.item:hover{
+    background-color: black;
+}
+
+.lista_oculta{
+    display: none;
+}
+
+/* Contenido */
+
+main{
+    width: 100%;
+    max-height: 3000px;
+}
+
+.Novedades{
+    width: 100%;
+    max-height: 1000px;
+}
+
+.Contenedor{
+    width: 100%;
+    height: 650px;
+}
+
+.swiper{
+    width: 100%;
+    height: 600px;
+}
+
+.slides-conteiner{
+    width: 100%;
+    height: 500px;
+}
+
+.swiper-slide{
+    width: 450px;
+    height: 450px;
+    visibility: visible;
+
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+
+/* Pie de PAgina */
+
+footer{
+    width: 100%;
+    max-height: 1000px;
+    display: flex;
+}
+
+.Datos{
+    width: 40%;
+    height: 100px;
+}
+
+.Derechos{
+    width: 60%;
+    height: 100px;
+}
+
+@media screen and (max-width: 800px) {
+    .swiper-slide{
+        width: 500px;
+        height: 550px;
+    }   
+}
+
+@media screen and (max-width: 550px) {
+/*Menu*/
+    .menu{
+        width: 100%;
+        max-height: 800px;
+    }
+
+    .icono{
+        width: 100%;
+        height: 50px;
+
+        padding: 10px;
+        display: flex;
+    }
+
+    .menu-desplegable{
+        height: 50px;
+        display: block;
+    }
+
+    .menu-contenedor{
+        width: 100%;
+        max-height: 600px;
+    }
+
+    .contenidos{
+        height: 70%;
+
+        align-content: center;
+        flex-direction: column;
+    }
+
+    .item{
+        margin: 0;
+    }
+/*Contenidos*/
+
+    .Novedades{
+        max-height: 750px;
+    }
+
+    .Contenedor{
+        max-height: 700px;
+    }
+
+    .swiper{
+        height: 475px;
+    }
+
+    .swiper-slide{
+        width: 300px;
+        height: 350px;
+    }   
+}
